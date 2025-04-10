@@ -14,27 +14,4 @@ const getUser = async (req, res) => {
     }
 }
 
-const getUerChats = async (req, res) => {
-    try{
-        const user = req.user;
-        const userchats = await User.aggregate([
-            {$match : {username : user.username}},
-            {$unwind : '$chats'},
-            {$project : {chatId : '$chats'}},
-            {$lookup : {
-                from : "chats",
-                localField: "chatId", // Field in the current pipeline to match on
-              foreignField: "chatId", // Field in the Chat collection to join on
-              as: "chatDetails" // Output array field for joined documents
-            }},
-            {$unwind : '$chatDetails'},
-            {$project : {message : '$chatDetails.message', isBot : '$chatDetails.isBot', _id : 0}}
-          ])
-        return res.status(200).json({ chats: userchats, chatToken : user.chatToken })
-    }catch (error) {
-        console.error("Error fetching user chats:", error);
-        return res.status(500).json({ message: 'Internal server error'})
-    }
-}
-
-export { getUser, getUerChats }
+export { getUser }
