@@ -1,26 +1,21 @@
 import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
-    username : {
-        required : true,
-        type : String,
-        unique : true,
+    username: {
+        required: true,
+        type: String,
+        unique: true,
     },
-    password : {
-        required : true,
-        type : String,
+    password: {
+        required: true,
+        type: String,
     },
-    chatToken : {
-        required : true,
-        type : Number,
-        default : 10,
-    },
-    chats : [{
-        type : Number,
-        ref : 'Chat',
+    chats: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Chat',
     }],
 }, {
-    timestamps : true,
+    timestamps: true,
 })
 
 const User = mongoose.model("users", userSchema)

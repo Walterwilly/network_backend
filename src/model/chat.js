@@ -1,31 +1,19 @@
-import mongoose from 'mongoose'
-import mongooseSequence from 'mongoose-sequence';
-
-const AutoIncrement = mongooseSequence(mongoose);
+import mongoose from 'mongoose';
 
 const chatSchema = new mongoose.Schema({
-    chatId : {
-        type : Number,
-        unique : true,
+    message: {
+        type: String,
+        required: true,
     },
-    username : {
-        required : true,
-        type : String,
-    },
-    message : {
-        type : String,
-        default : null,
-    },
-    isBot : {
-        required : true,
-        type : Boolean,
+    chatRoomId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ChatRoom',
+        required: true,
     }
 }, {
-    timestamps : true,
-})
+    timestamps: true,
+});
 
-chatSchema.plugin(AutoIncrement, { inc_field: 'chatId' });
+const Chat = mongoose.model('Chat', chatSchema);
 
-const Chat = mongoose.model("chats", chatSchema)
-
-export default Chat
+export default Chat;
