@@ -23,6 +23,7 @@ const createApp = () => {
   app.use('/auth', authenticationRoute);
   app.use('/api', apiRoute);
 
+
   return app;
 };
 
