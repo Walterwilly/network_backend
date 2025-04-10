@@ -5,10 +5,11 @@ import cookieParser from 'cookie-parser';
 import connect from './config/mongodb.js';
 import authenticationRoute from './router/authenticationRoute.js';
 import apiRoute from './router/apiRoute.js';
+import http from 'http';
+import socketHandler from './socket.js';
 
 const createApp = () => {
   const app = express();
-
   const corsOption = {
     origin: ['http://127.0.0.1:3000', 'http://localhost:3000'],
     credentials: true,
@@ -30,9 +31,10 @@ const createApp = () => {
 const startServer = async () => {
   const app = createApp();
   const PORT = process.env.PORT || 5000;
-
+  const server = http.createServer(app);
   try {
     await connect();
+    await socketHandler(server);
     app.listen(PORT, () => {
       console.log(`✅ Server running on http://localhost:${PORT}`);
     });

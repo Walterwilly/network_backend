@@ -1,7 +1,6 @@
-import User from '../models/User.js';   
-import Chat from '../models/Chat.js';
+import User from '../model/user.js';   
+import Chat from '../model/chat.js';
 import mongoose from 'mongoose';
-import { Server } from 'socket.io';
 
 const socketController = (socket, io) => {
 socket.on('join', async ({ username }) => {
